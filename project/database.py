@@ -1,4 +1,5 @@
 import psycopg2
+import os
 from sys import stderr
 
 dbg = True
@@ -15,8 +16,10 @@ class Database:
         self.conn.close()
 
     def init_database(self):
+        path = os.path.dirname(__file__)
+        file = path + '/model.sql'
         crsr = self.conn.cursor()
-        with open('model.sql', 'r') as f:
+        with open(file, 'r') as f:
             commands = f.read()
         crsr.execute(commands)
         self.conn.commit()
